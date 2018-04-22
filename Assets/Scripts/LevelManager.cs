@@ -7,7 +7,10 @@ public class LevelManager : MonoBehaviour {
 
     public void LoadLevel(string name)
     {
-
+            if (SceneManager.GetActiveScene().name == "scene2")
+            {
+                SceneManager.LoadScene("scene1", LoadSceneMode.Single);
+            }
         SceneManager.LoadScene(name);
     }
 

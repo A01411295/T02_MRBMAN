@@ -1,12 +1,18 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LambMovement : MonoBehaviour {
+    LevelManager levelManager;
+    public static int score = 0;
     public float speed = 0.4f;
     Vector2 dest = Vector2.zero;
+    public Text heatlthLabel;
+    public Text scoreLabel;
 
     void Start()
     {
+        scoreLabel.text = "" + score;
         dest = transform.position;
     }
 
@@ -41,5 +47,29 @@ public class LambMovement : MonoBehaviour {
         Vector2 pos = transform.position;
         RaycastHit2D hit = Physics2D.Linecast(pos + dir, pos);
         return (hit.collider == GetComponent<Collider2D>());
+    }
+
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+
+        if (collision.tag == "rayo")
+        {
+            score += collision.gameObject.GetComponent<Rayo>().points;
+            scoreLabel.text = "" + score;
+        }
+        if (collision.tag == "fantasma")
+        {
+            if ()
+            {
+
+            }
+            else
+            {
+
+            }
+
+        }
+        Destroy(collision.gameObject);
+
     }
 }
