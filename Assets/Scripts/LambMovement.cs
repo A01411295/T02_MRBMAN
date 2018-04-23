@@ -3,22 +3,24 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class LambMovement : MonoBehaviour {
-    LevelManager levelManager;
+    static LevelManager levelManager =  new LevelManager();
     public static int score = 0;
-    public float speed = 0.4f;
+    public static int health = 100;
+    public float speed = 0.2f;
     Vector2 dest = Vector2.zero;
-    public Text heatlthLabel;
+    public Text healthLabel;
     public Text scoreLabel;
 
     void Start()
     {
+        healthLabel.text = ""+health;
         scoreLabel.text = "" + score;
         dest = transform.position;
     }
 
     void FixedUpdate()
     {
-        // Move closer to Destination
+        /* Move closer to Destination
         Vector2 p = Vector2.MoveTowards(transform.position, dest, speed);
         GetComponent<Rigidbody2D>().MovePosition(p);
 
@@ -35,19 +37,42 @@ public class LambMovement : MonoBehaviour {
                 dest = (Vector2)transform.position - Vector2.right;
         }
 
-        // Animation Parameters
-        Vector2 dir = dest - (Vector2)transform.position;
-        GetComponent<Animator>().SetFloat("DirX", dir.x);
-        GetComponent<Animator>().SetFloat("DirY", dir.y);
+        
+        */
+         
+         if (Input.GetKey(KeyCode.LeftArrow))
+         {
+            resetTriggers();
+            GetComponent<Animator>().SetTrigger("left");
+             transform.position += Vector3.left * speed ;
+            
+            
+         }
+         if (Input.GetKey(KeyCode.RightArrow))
+         {
+            resetTriggers();
+            GetComponent<Animator>().SetTrigger("right");
+             transform.position += Vector3.right * speed;
+            
+            
+         }
+         if (Input.GetKey(KeyCode.UpArrow))
+         {
+            resetTriggers();
+            GetComponent<Animator>().SetTrigger("up");
+             transform.position += Vector3.up * speed ;
+            
+         }
+         if (Input.GetKey(KeyCode.DownArrow))
+         {
+            resetTriggers();
+            GetComponent<Animator>().SetTrigger("down");
+             transform.position += Vector3.down * speed ;
+            
+         }
+        
     }
 
-    bool valid(Vector2 dir)
-    {
-        //Valid Position 
-        Vector2 pos = transform.position;
-        RaycastHit2D hit = Physics2D.Linecast(pos + dir, pos);
-        return (hit.collider == GetComponent<Collider2D>());
-    }
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
@@ -59,17 +84,18 @@ public class LambMovement : MonoBehaviour {
         }
         if (collision.tag == "fantasma")
         {
-            if ()
-            {
-
-            }
-            else
-            {
-
-            }
-
+            
+            levelManager.loadQuestion();
+ 
         }
         Destroy(collision.gameObject);
 
     }
+
+    public void resetTriggers (){
+            GetComponent<Animator>().ResetTrigger("down");
+            GetComponent<Animator>().ResetTrigger("left");
+            GetComponent<Animator>().ResetTrigger("up");
+            GetComponent<Animator>().ResetTrigger("right");
+        }
 }
