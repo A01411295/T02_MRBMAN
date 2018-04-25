@@ -10,6 +10,7 @@ public class QuestionGenerator : MonoBehaviour {
     public Text answer2;
     public Text answer3;
     public Text result;
+    public LambMovement lamb;
     static List<int> listNumbers;
     static LevelManager levelManager = new LevelManager();
 
@@ -46,11 +47,12 @@ public class QuestionGenerator : MonoBehaviour {
         if(listNumbers[answer] == 1)
         {
             result.text = "Felicidades que inteligente";
-            
+            lamb.answerQuestion(1);
         }
         else
         {
             result.text = "No estudiaste lo suficiente";
+            lamb.answerQuestion(0);
         }
 
         Invoke("returnScene", 1);

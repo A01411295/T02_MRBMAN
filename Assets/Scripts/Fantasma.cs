@@ -3,46 +3,44 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Fantasma : MonoBehaviour {
-    public int damage;
-
-    private Vector3 startPos;
-    public Transform target;
-    public float speed;
-    private bool moveUp;
-
-    // Use this for initialization
-    void Start () {
-        startPos = transform.position;
-        moveUp = true;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        float step = speed * Time.deltaTime;
-        if (transform.position == target.position)
-        {
-            moveUp = false;
-            Flip();
-        }
-        else if (transform.position == startPos)
-        {
-            moveUp = true;
-            Flip();
-        }
-        if (moveUp == false)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, startPos, step);
-        }
-        else if (moveUp)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, target.position, step);
-        }
-    }
-    private void Flip()
-    {
-        var s = transform.localScale;
-        s.x *= -1;
-        transform.localScale = s;
-    }
+    public Transform[] points;
+         // put the points from unity interface
+ 
+     public int currentWayPoint = 0; 
+     Transform targetWayPoint;
+ 
+     public float speed = 4f;
+ 
+     // Use this for initialization
+     void Start () {
+ 
+     }
+     
+     // Update is called once per frame
+     void Update () {
+         // check if we have somewere to walk
+         if(currentWayPoint < this.points.Length)
+         {
+             if(targetWayPoint == null)
+                 targetWayPoint = points[currentWayPoint];
+             walk();
+         }
+     }
+ 
+     void walk(){
+         // rotate towards the target
+         //transform.forward = Vector3.RotateTowards(transform.forward, targetWayPoint.position - transform.position, speed*Time.deltaTime, 0.0f);
+ 
+         // move towards the target
+         transform.position = Vector3.MoveTowards(transform.position, targetWayPoint.position,   speed*Time.deltaTime);
+ 
+         if(transform.position == targetWayPoint.position)
+         {
+             currentWayPoint ++ ;
+            if(currentWayPoint>=this.points.Length){
+                currentWayPoint=0;
+            }
+             targetWayPoint = points[currentWayPoint];
+         }
+     } 
 }

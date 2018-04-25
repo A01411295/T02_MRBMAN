@@ -3,23 +3,26 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class LambMovement : MonoBehaviour {
-    static LevelManager levelManager =  new LevelManager();
+    static LevelManager levelManager;
     public static int score = 0;
     public static int health = 100;
     public float speed = 0.2f;
-    Vector2 dest = Vector2.zero;
+    
     public Text healthLabel;
     public Text scoreLabel;
 
     void Start()
     {
+        levelManager =  new LevelManager();
         healthLabel.text = ""+health;
         scoreLabel.text = "" + score;
-        dest = transform.position;
+      
     }
 
     void FixedUpdate()
     {
+        healthLabel.text = ""+health;
+        scoreLabel.text = "" + score;
         /* Move closer to Destination
         Vector2 p = Vector2.MoveTowards(transform.position, dest, speed);
         GetComponent<Rigidbody2D>().MovePosition(p);
@@ -98,4 +101,13 @@ public class LambMovement : MonoBehaviour {
             GetComponent<Animator>().ResetTrigger("up");
             GetComponent<Animator>().ResetTrigger("right");
         }
+    public void answerQuestion(int a){
+        if(a==1){
+            score=score*2;
+            scoreLabel.text = "" + score;
+        }else{
+            health-=50;
+            healthLabel.text = ""+health;
+        }
+    }
 }
