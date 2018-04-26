@@ -7,22 +7,33 @@ public class LambMovement : MonoBehaviour {
     public static int score = 0;
     public static int health = 100;
     public float speed = 0.2f;
-    
+    GameObject maze;
     public Text healthLabel;
     public Text scoreLabel;
+    static int mazeit;
 
     void Start()
     {
+        
+
+        Debug.Log("maze it"+Maze.iteration);
         levelManager =  new LevelManager();
         healthLabel.text = ""+health;
         scoreLabel.text = "" + score;
-      
+        maze = GameObject.Find("maze");
     }
 
     void FixedUpdate()
     {
         healthLabel.text = ""+health;
         scoreLabel.text = "" + score;
+
+        if(health <= 0)
+        {
+            healthLabel.text = "0";
+            health = 100;
+            levelManager.LoadLevel("End");
+        }
         /* Move closer to Destination
         Vector2 p = Vector2.MoveTowards(transform.position, dest, speed);
         GetComponent<Rigidbody2D>().MovePosition(p);
@@ -84,10 +95,14 @@ public class LambMovement : MonoBehaviour {
         {
             score += collision.gameObject.GetComponent<Rayo>().points;
             scoreLabel.text = "" + score;
+            maze.GetComponent<Maze>().rays--;
         }
         if (collision.tag == "fantasma")
         {
-            
+            mazeit = Maze.iteration;
+            Debug.Log("maze it: "+mazeit);
+            Maze.iteration = 0;
+             Debug.Log("maze it: "+mazeit);
             levelManager.loadQuestion();
  
         }
@@ -109,5 +124,10 @@ public class LambMovement : MonoBehaviour {
             health-=50;
             healthLabel.text = ""+health;
         }
+        Invoke("returnIteration", 2);
+    }
+    public void returnIteration(){
+        Maze.iteration = mazeit; 
+        Debug.Log(""+Maze.iteration);
     }
 }

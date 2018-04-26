@@ -8,16 +8,17 @@ public class Fantasma : MonoBehaviour {
  
      public int currentWayPoint = 0; 
      Transform targetWayPoint;
- 
+    
      public float speed = 4f;
- 
+        float speed1;
      // Use this for initialization
      void Start () {
- 
+        speed1 = speed;
      }
      
      // Update is called once per frame
      void Update () {
+        speed = (float)(speed1 * Maze.iteration);
          // check if we have somewere to walk
          if(currentWayPoint < this.points.Length)
          {

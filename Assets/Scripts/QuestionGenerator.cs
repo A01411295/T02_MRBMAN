@@ -55,7 +55,7 @@ public class QuestionGenerator : MonoBehaviour {
             lamb.answerQuestion(0);
         }
 
-        Invoke("returnScene", 1);
+        Invoke("returnScene", 2);
           
     }
     public void returnScene()

@@ -15,9 +15,8 @@ public class LevelManager : MonoBehaviour {
         currentScene = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene("question", LoadSceneMode.Additive);
     }
-    public bool returnToScene(){
+    public void returnToScene(){
         SceneManager.UnloadScene("question");
-        return answer;
     }
 
     public void EndGame()
